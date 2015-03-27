@@ -1,4 +1,4 @@
-PROJECT = DNA_MOST_AudioSettings
+PROJECT = JLRPOCX016.MOSTAudio
 INSTALL_FILES = images js icon.png index.html
 WRT_FILES = DNA_common css icon.png index.html setup config.xml js manifest.json images
 VERSION := 0.0.1
@@ -27,7 +27,7 @@ kill.xwalk:
 	ssh root@$(TIZEN_IP) "pkill xwalk"
 
 kill.feb1:
-	ssh app@$(TIZEN_IP) "pkgcmd -k JLRPOCX031.Phone"
+	ssh app@$(TIZEN_IP) "pkgcmd -k JLRPOCX016.MOSTAudio"
 
 run: install
 	ssh app@$(TIZEN_IP) "export DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/5000/dbus/user_bus_socket' && xwalkctl | egrep -e 'MOSTAudio' | awk '{print $1}' | xargs --no-run-if-empty xwalk-launcher -d"
@@ -36,18 +36,18 @@ boxcheck: tizen-release
 	ssh root@$(TIZEN_IP) "cat /etc/tizen-release" | diff tizen-release - ; if [ $$? -ne 0 ] ; then tput setaf 1 ; echo "tizen-release version not correct"; tput sgr0 ;exit 1 ; fi
 
 run.feb1: install.feb1
-	ssh app@$(TIZEN_IP) "app_launcher -s JLRPOCX031.Phone -d "
+	ssh app@$(TIZEN_IP) "app_launcher -s JLRPOCX016.MOSTAudio -d "
 
 install.feb1: deploy
 ifndef OBS
-	-ssh app@$(TIZEN_IP) "pkgcmd -u -n JLRPOCX031.Phone -q"
-	ssh app@$(TIZEN_IP) "pkgcmd -i -t wgt -p /home/app/JLRPOCX031.Phone.wgt -q"
+	-ssh app@$(TIZEN_IP) "pkgcmd -u -n JLRPOCX016.MOSTAudio -q"
+	ssh app@$(TIZEN_IP) "pkgcmd -i -t wgt -p /home/app/JLRPOCX016.MOSTAudio.wgt -q"
 endif
 
 install: deploy
 ifndef OBS
 	ssh app@$(TIZEN_IP) "export DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/5000/dbus/user_bus_socket' && xwalkctl | egrep -e 'MOSTAudio' | awk '{print $1}' | xargs --no-run-if-empty xwalkctl -u"
-	ssh app@$(TIZEN_IP) "export DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/5000/dbus/user_bus_socket' && xwalkctl -i /home/app/DNA_MOST_AudioSettings.wgt"
+	ssh app@$(TIZEN_IP) "export DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/5000/dbus/user_bus_socket' && xwalkctl -i /home/app/JLRPOCX016.MOSTAudio.wgt"
 endif
 
 $(PROJECT).wgt : wgt
@@ -82,6 +82,8 @@ common: /opt/usr/apps/common
 
 dev-common: ../common-app
 	cp -rf ../common-app ./DNA_common
+	rm -fr ./DNA_common/.git
+	rm -fr ./DNA_common/common-app/.git
 
 ../DNA_common:
 	@echo "Please checkout Common Assets"

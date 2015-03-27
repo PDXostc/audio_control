@@ -42,18 +42,23 @@ install.feb1: deploy
 ifndef OBS
 	-ssh app@$(TIZEN_IP) "pkgcmd -u -n JLRPOCX016.MOSTAudio -q"
 	ssh app@$(TIZEN_IP) "pkgcmd -i -t wgt -p /home/app/JLRPOCX016.MOSTAudio.wgt -q"
+else
+	cp -r $(PROJECT).wgt ${DESTDIR}/opt/usr/apps/.preinstallWidgets/
 endif
 
-install: deploy
 ifndef OBS
+install: deploy
 	ssh app@$(TIZEN_IP) "export DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/5000/dbus/user_bus_socket' && xwalkctl | egrep -e 'MOSTAudio' | awk '{print $1}' | xargs --no-run-if-empty xwalkctl -u"
 	ssh app@$(TIZEN_IP) "export DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/5000/dbus/user_bus_socket' && xwalkctl -i /home/app/JLRPOCX016.MOSTAudio.wgt"
 endif
 
+install_obs: 
+	mkdir -p ${DESTDIR}/opt/usr/apps/.preinstallWidgets
+	cp -r JLRPOCX016.MOSTAudio.wgt ${DESTDIR}/opt/usr/apps/.preinstallWidgets/
+
 $(PROJECT).wgt : wgt
 
 deploy: dev
-
 ifndef OBS
 	scp $(PROJECT).wgt app@$(TIZEN_IP):/home/app
 endif
@@ -72,11 +77,10 @@ clean:
 	rm -f $(PROJECT).wgt
 	git clean -f
 
-common: /opt/usr/apps/common
-	cp -r /opt/usr/apps/common/js/* js/
-	cp -r /opt/usr/apps/common/css/* css/
+common: /opt/usr/apps/common-apps
+	cp -r /opt/usr/apps/common-apps DNA_common
 
-/opt/usr/apps/common:
+/opt/usr/apps/common-apps:
 	@echo "Please install Common Assets"
 	exit 1
 

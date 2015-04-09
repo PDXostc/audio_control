@@ -9,7 +9,7 @@ INSTALL_DIR = $(DESTDIR)/opt/usr/apps/.preinstallWidgets
 SEND := ~/send
 
 ifndef TIZEN_IP
-TIZEN_IP=TizenNdis
+TIZEN_IP=tizenvtc
 endif
 
 dev: clean dev-common
@@ -71,7 +71,7 @@ wgtPkg: common
 
 clean:
 	rm -rf js/services
-	rm -rf common
+	rm -rf DNA_common
 	rm -rf css/car
 	rm -rf css/user
 	rm -f $(PROJECT).wgt

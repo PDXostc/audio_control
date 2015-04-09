@@ -18,19 +18,19 @@
 /*global Bootstrap */
 
 /**
-  * Boilerplate application provides starting point for new applications and provides basic layout and infrastructure:
-  *
-  * * {{#crossLink "Bootstrap"}}{{/crossLink}} component
-  * * {{#crossLink "BottomPanel"}}{{/crossLink}} component
-  * * {{#crossLink "TopBarIcons"}}{{/crossLink}} component
-  *
-  * Update following code for new applications built from this code:
-  *
-  * * `config.xml` - update `/widget/@id`, `/widget/tizen:application/@id`, `/widget/tizen:application/@name`, `/widget/name`
-  * * `icon.png` - application icon
-  *
-  * @module BoilerplateApplication
-  * @main BoilerplateApplication
+ * Boilerplate application provides starting point for new applications and provides basic layout and infrastructure:
+ *
+ * * {{#crossLink "Bootstrap"}}{{/crossLink}} component
+ * * {{#crossLink "BottomPanel"}}{{/crossLink}} component
+ * * {{#crossLink "TopBarIcons"}}{{/crossLink}} component
+ *
+ * Update following code for new applications built from this code:
+ *
+ * * `config.xml` - update `/widget/@id`, `/widget/tizen:application/@id`, `/widget/tizen:application/@name`, `/widget/name`
+ * * `icon.png` - application icon
+ *
+ * @module BoilerplateApplication
+ * @main BoilerplateApplication
  **/
 
 /**
@@ -48,9 +48,9 @@ var te;
  * Array of signals who want subscribe in carInd 
  * @property carIndicatorSignals {string[]}
  */
-var carIndicatorSignals =  [
-                            "IviPoC_NightMode"
-                            ];
+var carIndicatorSignals = [
+  "IviPoC_NightMode"
+];
 
 /**
  * Initialize application components and register button events.
@@ -59,25 +59,25 @@ var carIndicatorSignals =  [
  * @static
  */
 
-var init = function () {
-    var bootstrap = new Bootstrap(function (status) {
-		/*
+var init = function() {
+  var bootstrap = new Bootstrap(function(status) {
+    /*
         $("#topBarIcons").topBarIconsPlugin('init', 'news');
 	$("#clockElement").ClockPlugin('init', 5);
 	$("#clockElement").ClockPlugin('startTimer');
 	$('#bottomPanel').bottomPanel('init');*/
 
-/*
-	if (tizen.speech) {
-	    setupSpeechRecognition();
-	} else {
-	    console.log("Store: Speech Recognition not running, voice control will be unavailable");
-	}
-	bootstrap.themeEngine.addStatusListener(function (eData) {
-		// setThemeImageColor();
-	});
-	*/		
-    });
+    /*
+    	if (tizen.speech) {
+    	    setupSpeechRecognition();
+    	} else {
+    	    console.log("Store: Speech Recognition not running, voice control will be unavailable");
+    	}
+    	bootstrap.themeEngine.addStatusListener(function (eData) {
+    		// setThemeImageColor();
+    	});
+    	*/
+  });
 };
 
 /**
@@ -94,52 +94,52 @@ $(document).ready(init);
  * @static
  **/
 function setThemeImageColor() {
-	var imageSource;
-	$('body').find('img').each(function() {
-		var self = this;
-		imageSource = $(this).attr('src');
+  var imageSource;
+  $('body').find('img').each(function() {
+    var self = this;
+    imageSource = $(this).attr('src');
 
-	    if (typeof(imageSource) !== 'undefined' && $(this.parentElement).hasClass('themeImage') == false) {
-	        console.log(imageSource);
+    if (typeof(imageSource) !== 'undefined' && $(this.parentElement).hasClass('themeImage') == false) {
+      console.log(imageSource);
 
-	        var img = new Image();
-	        var ctx = document.createElement('canvas').getContext('2d');
+      var img = new Image();
+      var ctx = document.createElement('canvas').getContext('2d');
 
-	        img.onload = function () {
-	            var w = ctx.canvas.width = img.width;
-	            var h = ctx.canvas.height = img.height;
-	            ctx.fillStyle = ThemeKeyColor;
-	            ctx.fillRect(0, 0, w, h);
-	            ctx.globalCompositeOperation = 'destination-in';
-	            ctx.drawImage(img, 0, 0);
+      img.onload = function() {
+        var w = ctx.canvas.width = img.width;
+        var h = ctx.canvas.height = img.height;
+        ctx.fillStyle = ThemeKeyColor;
+        ctx.fillRect(0, 0, w, h);
+        ctx.globalCompositeOperation = 'destination-in';
+        ctx.drawImage(img, 0, 0);
 
-	            $(self).attr('src', ctx.canvas.toDataURL());
-	            $(self).hide(0, function() { $(self).show();});
-	        };
+        $(self).attr('src', ctx.canvas.toDataURL());
+        $(self).hide(0, function() {
+          $(self).show();
+        });
+      };
 
-	        img.src = imageSource;
-	    }
-	});
+      img.src = imageSource;
+    }
+  });
 }
 
 function setupSpeechRecognition() {
-	console.log("Store setupSpeechRecognition");
-	Speech.addVoiceRecognitionListener({
-		onapplicationinstall : function() {
-			console.log("Speech application install invoked");
-			if (_applicationDetail.id !== undefined) {
-				StoreLibrary.installApp(_applicationDetail.id);
-			}
-		},
-		onapplicationuninstall : function() {
-			console.log("Speech application uninstall invoked");
-			if (_applicationDetail.id !== undefined) {
-				StoreLibrary.uninstallApp(_applicationDetail.id);
-			}
-		}
-
-	});
+  console.log("Store setupSpeechRecognition");
+  Speech.addVoiceRecognitionListener({
+    onapplicationinstall: function() {
+      console.log("Speech application install invoked");
+      if (_applicationDetail.id !== undefined) {
+        StoreLibrary.installApp(_applicationDetail.id);
+      }
+    },
+    onapplicationuninstall: function() {
+      console.log("Speech application uninstall invoked");
+      if (_applicationDetail.id !== undefined) {
+        StoreLibrary.uninstallApp(_applicationDetail.id);
+      }
+    }
+  });
 }
 
-function loggIt(string) {
-};
+function loggIt(string) {};
